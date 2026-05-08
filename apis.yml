@@ -1,0 +1,29 @@
+aid: milvus
+url: https://raw.githubusercontent.com/api-evangelist/milvus/refs/heads/main/apis.yml
+name: Milvus
+x-type: company
+description: >-
+  Milvus is an open-source cloud-native vector database built for billion-scale similarity search. Maintained by Zilliz; LF AI & Data Foundation graduated project.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Vector Database
+  - AI
+  - Embeddings
+  - Open Source
+  - Cloud-Native
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://milvus.io/
+  - type: Plans
+    url: plans/milvus-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/milvus-rate-limits.yml
+  - type: FinOps
+    url: finops/milvus-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
