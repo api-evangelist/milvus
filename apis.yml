@@ -1,7 +1,7 @@
 aid: milvus
 url: https://raw.githubusercontent.com/api-evangelist/milvus/refs/heads/main/apis.yml
 name: Milvus
-x-type: opensource
+kind: opensource
 description: >-
   Milvus is an Apache 2.0 open-source vector database. It exposes a versioned REST API
   alongside gRPC and language SDKs (Python, Go, Java, Node.js). Maintained by Zilliz;
