@@ -62,6 +62,8 @@ apis:
       - type: Documentation
         url: https://milvus.io/docs/
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/the-milvus-project
   - type: Website
     url: https://milvus.io/
   - type: Portal
