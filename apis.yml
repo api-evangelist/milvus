@@ -82,6 +82,8 @@ common:
     url: rate-limits/milvus-rate-limits.yml
   - type: FinOps
     url: finops/milvus-finops.yml
+  - type: LLMsTxt
+    url: https://milvus.io/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
