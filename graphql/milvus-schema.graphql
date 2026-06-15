@@ -1,0 +1,966 @@
+"""
+Milvus GraphQL Schema
+Conceptual schema derived from the Milvus REST/gRPC API v2.5.x
+Covers: collections, indexes, partitions, vectors, search, query, roles, and RBAC
+"""
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Scalars
+# ──────────────────────────────────────────────────────────────────────────────
+
+scalar JSON
+scalar Float32
+scalar Int64
+scalar Timestamp
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Enums
+# ──────────────────────────────────────────────────────────────────────────────
+
+enum DataType {
+  BOOL
+  INT8
+  INT16
+  INT32
+  INT64
+  FLOAT
+  DOUBLE
+  VARCHAR
+  JSON
+  ARRAY
+  BINARY_VECTOR
+  FLOAT_VECTOR
+  FLOAT16_VECTOR
+  BFLOAT16_VECTOR
+  SPARSE_FLOAT_VECTOR
+}
+
+enum IndexType {
+  FLAT
+  IVF_FLAT
+  IVF_SQ8
+  IVF_PQ
+  HNSW
+  SCANN
+  DISKANN
+  GPU_IVF_FLAT
+  GPU_IVF_PQ
+  GPU_BRUTE_FORCE
+  GPU_CAGRA
+  SPARSE_INVERTED_INDEX
+  SPARSE_WAND
+  BIN_FLAT
+  BIN_IVF_FLAT
+  AUTOINDEX
+}
+
+enum MetricType {
+  L2
+  IP
+  COSINE
+  HAMMING
+  JACCARD
+}
+
+enum CollectionState {
+  COLLECTION_CREATED
+  COLLECTION_CREATING
+  COLLECTION_DROPPING
+}
+
+enum LoadState {
+  NOT_LOAD
+  LOADING
+  LOADED
+}
+
+enum PartitionState {
+  NOT_EXISTS
+  EXISTS
+  CREATING
+  DROPPING
+}
+
+enum ConsistencyLevel {
+  STRONG
+  BOUNDED
+  EVENTUALLY
+  CUSTOMIZED
+  SESSION
+}
+
+enum PrivilegeAction {
+  INSERT
+  DELETE
+  SEARCH
+  QUERY
+  CREATE_INDEX
+  DROP_INDEX
+  CREATE_COLLECTION
+  DROP_COLLECTION
+  LOAD
+  RELEASE
+  FLUSH
+  COMPACT
+  IMPORT
+  TRANSFER_NODE
+  LIST_DATABASES
+  ALL
+}
+
+enum PrivilegeGroupScope {
+  COLLECTION
+  DATABASE
+  GLOBAL
+}
+
+enum CompactionState {
+  UNDEFINED
+  EXECUTING
+  COMPLETED
+}
+
+enum ImportState {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum SegmentState {
+  NOT_EXIST
+  GROWING
+  SEALED
+  FLUSHED
+  FLUSHING
+  DROPPED
+  IMPORTING
+}
+
+enum RankerType {
+  RRF
+  WEIGHTED
+}
+
+enum TaskState {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Core Entity Types
+# ──────────────────────────────────────────────────────────────────────────────
+
+type Collection {
+  collectionName: String!
+  collectionID: Int64!
+  description: String
+  fields: [FieldSchema!]!
+  enableDynamicField: Boolean!
+  autoID: Boolean!
+  shardsNum: Int
+  consistencyLevel: ConsistencyLevel!
+  properties: JSON
+  loadState: LoadState!
+  partitionKeyField: String
+  clusteringKeyField: String
+  createdTimestamp: Timestamp
+  aliases: [String!]
+}
+
+type FieldSchema {
+  fieldID: Int64!
+  name: String!
+  dataType: DataType!
+  isPrimaryKey: Boolean!
+  isPartitionKey: Boolean!
+  isClusteringKey: Boolean!
+  autoID: Boolean!
+  description: String
+  dim: Int
+  maxLength: Int
+  maxCapacity: Int
+  elementType: DataType
+  defaultValue: JSON
+  nullable: Boolean
+  indexParams: JSON
+}
+
+type Index {
+  collectionName: String!
+  fieldName: String!
+  indexName: String!
+  indexType: IndexType!
+  metricType: MetricType
+  params: JSON
+  totalRows: Int64
+  pendingRows: Int64
+  indexedRows: Int64
+  state: String
+  indexStateFailReason: String
+}
+
+type Partition {
+  partitionName: String!
+  partitionID: Int64!
+  loadState: PartitionState!
+  numRows: Int64
+}
+
+type Database {
+  dbName: String!
+  dbID: Int64!
+  createdTimestamp: Timestamp
+  properties: JSON
+}
+
+type Role {
+  roleName: String!
+  description: String
+}
+
+type User {
+  userName: String!
+  roles: [String!]
+}
+
+type Grant {
+  role: String!
+  object: String!
+  objectName: String!
+  privilege: String!
+  dbName: String
+  grantor: String
+}
+
+type PrivilegeGroup {
+  groupName: String!
+  privileges: [Privilege!]!
+}
+
+type Privilege {
+  name: String!
+  scope: PrivilegeGroupScope!
+}
+
+type Segment {
+  segmentID: Int64!
+  collectionID: Int64!
+  partitionID: Int64!
+  numRows: Int64!
+  state: SegmentState!
+  memSize: Int64
+  indexInfos: [SegmentIndexInfo!]
+}
+
+type SegmentIndexInfo {
+  indexID: Int64!
+  enableIndex: Boolean!
+  indexName: String
+  fieldID: Int64!
+  buildID: Int64!
+  indexSize: Int64
+  indexVersion: Int
+}
+
+type CompactionJob {
+  compactionID: Int64!
+  collectionID: Int64!
+  state: CompactionState!
+  executingPlanNumber: Int
+  timeoutPlanNumber: Int
+  completedPlanNumber: Int
+  failedPlanNumber: Int
+}
+
+type ImportJob {
+  jobID: String!
+  collectionName: String!
+  state: ImportState!
+  progress: Float
+  reason: String
+  importedCount: Int64
+  totalCount: Int64
+  details: [ImportJobDetail!]
+}
+
+type ImportJobDetail {
+  fileName: String!
+  fileSize: Int64!
+  progress: Float!
+  completeTime: Timestamp
+  state: ImportState!
+  importedRows: Int64
+  totalRows: Int64
+}
+
+type Alias {
+  alias: String!
+  collectionName: String!
+  dbName: String
+}
+
+type LoadProgress {
+  collectionName: String!
+  partitions: [String!]
+  loadProgress: Int!
+  loadState: LoadState!
+  message: String
+}
+
+type FlushResult {
+  collectionName: String!
+  segmentIDs: [Int64!]
+  flushCollectionSegmentIDs: [Int64!]
+  timeOfSeal: Timestamp
+}
+
+type CompactResult {
+  collectionID: Int64!
+  compactionID: Int64!
+}
+
+type InsertResult {
+  insertCount: Int64!
+  insertIDs: [JSON!]!
+  cost: Int
+}
+
+type UpsertResult {
+  upsertCount: Int64!
+  upsertIDs: [JSON!]!
+  cost: Int
+}
+
+type DeleteResult {
+  deleteCount: Int64!
+  cost: Int
+}
+
+type SearchResult {
+  results: [SearchHit!]!
+  collectionName: String!
+  cost: Int
+  sessionTs: Int64
+  recallRate: Float
+}
+
+type SearchHit {
+  id: JSON!
+  distance: Float!
+  entity: JSON
+}
+
+type HybridSearchResult {
+  results: [SearchHit!]!
+  collectionName: String!
+  cost: Int
+}
+
+type QueryResult {
+  data: [JSON!]!
+  cost: Int
+  sessionTs: Int64
+}
+
+type GetResult {
+  data: [JSON!]!
+  cost: Int
+}
+
+type TextMatchResult {
+  data: [JSON!]!
+  cost: Int
+}
+
+type ServerInfo {
+  buildVersion: String!
+  buildTags: String
+  gitCommit: String
+  goVersion: String
+  deployMode: String
+  reserved: JSON
+}
+
+type Metric {
+  name: String!
+  value: JSON
+  timestamp: Timestamp
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Pagination / Connection types
+# ──────────────────────────────────────────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+  totalCount: Int
+}
+
+type CollectionConnection {
+  edges: [CollectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CollectionEdge {
+  node: Collection!
+  cursor: String!
+}
+
+type IndexConnection {
+  edges: [IndexEdge!]!
+  pageInfo: PageInfo!
+}
+
+type IndexEdge {
+  node: Index!
+  cursor: String!
+}
+
+type SegmentConnection {
+  edges: [SegmentEdge!]!
+  pageInfo: PageInfo!
+}
+
+type SegmentEdge {
+  node: Segment!
+  cursor: String!
+}
+
+type ImportJobConnection {
+  edges: [ImportJobEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ImportJobEdge {
+  node: ImportJob!
+  cursor: String!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Fields / Schema
+# ──────────────────────────────────────────────────────────────────────────────
+
+input FieldSchemaInput {
+  fieldName: String!
+  dataType: DataType!
+  isPrimaryKey: Boolean
+  isPartitionKey: Boolean
+  isClusteringKey: Boolean
+  autoID: Boolean
+  description: String
+  dim: Int
+  maxLength: Int
+  maxCapacity: Int
+  elementType: DataType
+  defaultValue: JSON
+  nullable: Boolean
+  indexParams: JSON
+}
+
+input IndexParamInput {
+  fieldName: String!
+  indexName: String
+  indexType: IndexType!
+  metricType: MetricType
+  params: JSON
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Collection mutations
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreateCollectionInput {
+  collectionName: String!
+  dbName: String
+  schema: CollectionSchemaInput!
+  indexParams: [IndexParamInput!]
+  consistencyLevel: ConsistencyLevel
+  enableDynamicField: Boolean
+  numShards: Int
+  properties: JSON
+}
+
+input CollectionSchemaInput {
+  autoID: Boolean
+  description: String
+  enableDynamicField: Boolean
+  fields: [FieldSchemaInput!]!
+}
+
+input LoadCollectionInput {
+  collectionName: String!
+  dbName: String
+  replicaNumber: Int
+  refreshLoad: Boolean
+}
+
+input ReleaseCollectionInput {
+  collectionName: String!
+  dbName: String
+}
+
+input DropCollectionInput {
+  collectionName: String!
+  dbName: String
+}
+
+input RenameCollectionInput {
+  collectionName: String!
+  newCollectionName: String!
+  dbName: String
+}
+
+input AlterCollectionInput {
+  collectionName: String!
+  dbName: String
+  properties: JSON!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Partition mutations
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreatePartitionInput {
+  collectionName: String!
+  partitionName: String!
+  dbName: String
+}
+
+input DropPartitionInput {
+  collectionName: String!
+  partitionName: String!
+  dbName: String
+}
+
+input LoadPartitionsInput {
+  collectionName: String!
+  partitionNames: [String!]!
+  dbName: String
+  replicaNumber: Int
+}
+
+input ReleasePartitionsInput {
+  collectionName: String!
+  partitionNames: [String!]!
+  dbName: String
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Index mutations
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreateIndexInput {
+  collectionName: String!
+  dbName: String
+  indexParams: [IndexParamInput!]!
+}
+
+input DropIndexInput {
+  collectionName: String!
+  fieldName: String!
+  indexName: String
+  dbName: String
+}
+
+input AlterIndexInput {
+  collectionName: String!
+  indexName: String!
+  dbName: String
+  properties: JSON!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Data mutations
+# ──────────────────────────────────────────────────────────────────────────────
+
+input InsertInput {
+  collectionName: String!
+  dbName: String
+  partitionName: String
+  data: [JSON!]!
+}
+
+input UpsertInput {
+  collectionName: String!
+  dbName: String
+  partitionName: String
+  data: [JSON!]!
+}
+
+input DeleteInput {
+  collectionName: String!
+  dbName: String
+  partitionName: String
+  filter: String
+  ids: [JSON!]
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Search / Query
+# ──────────────────────────────────────────────────────────────────────────────
+
+input SearchInput {
+  collectionName: String!
+  dbName: String
+  data: [[Float]!]!
+  annsField: String!
+  filter: String
+  limit: Int
+  offset: Int
+  outputFields: [String!]
+  searchParams: SearchParamsInput
+  partitionNames: [String!]
+  consistencyLevel: ConsistencyLevel
+  groupByField: String
+  groupSize: Int
+  strictGroupSize: Boolean
+}
+
+input SearchParamsInput {
+  metricType: MetricType
+  params: JSON
+  radius: Float
+  rangeFilter: Float
+}
+
+input HybridSearchInput {
+  collectionName: String!
+  dbName: String
+  requests: [AnnSearchInput!]!
+  rerank: RerankInput!
+  limit: Int
+  outputFields: [String!]
+  partitionNames: [String!]
+  consistencyLevel: ConsistencyLevel
+}
+
+input AnnSearchInput {
+  data: [[Float]!]!
+  annsField: String!
+  filter: String
+  limit: Int
+  searchParams: SearchParamsInput
+}
+
+input RerankInput {
+  strategy: RankerType!
+  params: JSON
+}
+
+input QueryInput {
+  collectionName: String!
+  dbName: String
+  filter: String!
+  outputFields: [String!]
+  partitionNames: [String!]
+  limit: Int
+  offset: Int
+  consistencyLevel: ConsistencyLevel
+}
+
+input GetInput {
+  collectionName: String!
+  dbName: String
+  ids: [JSON!]!
+  outputFields: [String!]
+  partitionNames: [String!]
+  consistencyLevel: ConsistencyLevel
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — User / Role / RBAC
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreateUserInput {
+  userName: String!
+  password: String!
+}
+
+input UpdatePasswordInput {
+  userName: String!
+  oldPassword: String!
+  newPassword: String!
+}
+
+input CreateRoleInput {
+  roleName: String!
+}
+
+input GrantPrivilegeInput {
+  roleName: String!
+  object: String!
+  objectName: String!
+  privilege: String!
+  dbName: String
+}
+
+input RevokePrivilegeInput {
+  roleName: String!
+  object: String!
+  objectName: String!
+  privilege: String!
+  dbName: String
+}
+
+input AssignRoleInput {
+  userName: String!
+  roleName: String!
+}
+
+input CreatePrivilegeGroupInput {
+  groupName: String!
+  privileges: [PrivilegeInput!]!
+}
+
+input PrivilegeInput {
+  name: String!
+  scope: PrivilegeGroupScope!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Alias
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreateAliasInput {
+  collectionName: String!
+  aliasName: String!
+  dbName: String
+}
+
+input DropAliasInput {
+  aliasName: String!
+  dbName: String
+}
+
+input AlterAliasInput {
+  collectionName: String!
+  aliasName: String!
+  dbName: String
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Database
+# ──────────────────────────────────────────────────────────────────────────────
+
+input CreateDatabaseInput {
+  dbName: String!
+  properties: JSON
+}
+
+input DropDatabaseInput {
+  dbName: String!
+}
+
+input AlterDatabaseInput {
+  dbName: String!
+  properties: JSON!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Input types — Import
+# ──────────────────────────────────────────────────────────────────────────────
+
+input ImportInput {
+  collectionName: String!
+  dbName: String
+  files: [[String!]!]!
+  partitionName: String
+  options: JSON
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Root Query
+# ──────────────────────────────────────────────────────────────────────────────
+
+type Query {
+  # ── Collections ──────────────────────────────────────────────────────────
+  listCollections(dbName: String): [String!]!
+  describeCollection(collectionName: String!, dbName: String): Collection!
+  getCollectionStats(collectionName: String!, dbName: String): CollectionStats!
+  getLoadState(collectionName: String!, dbName: String, partitionNames: [String!]): LoadProgress!
+  listCollectionsPaginated(dbName: String, first: Int, after: String): CollectionConnection!
+
+  # ── Partitions ───────────────────────────────────────────────────────────
+  listPartitions(collectionName: String!, dbName: String): [Partition!]!
+  hasPartition(collectionName: String!, partitionName: String!, dbName: String): Boolean!
+
+  # ── Indexes ───────────────────────────────────────────────────────────────
+  listIndexes(collectionName: String!, dbName: String, fieldName: String): [Index!]!
+  describeIndex(collectionName: String!, indexName: String!, dbName: String): Index!
+
+  # ── Aliases ───────────────────────────────────────────────────────────────
+  listAliases(collectionName: String, dbName: String): [Alias!]!
+  describeAlias(aliasName: String!, dbName: String): Alias!
+
+  # ── Databases ─────────────────────────────────────────────────────────────
+  listDatabases: [Database!]!
+  describeDatabase(dbName: String!): Database!
+
+  # ── Search / Query ────────────────────────────────────────────────────────
+  search(input: SearchInput!): SearchResult!
+  hybridSearch(input: HybridSearchInput!): HybridSearchResult!
+  query(input: QueryInput!): QueryResult!
+  get(input: GetInput!): GetResult!
+
+  # ── Users / Roles / RBAC ─────────────────────────────────────────────────
+  listUsers: [User!]!
+  describeUser(userName: String!): User!
+  listRoles: [Role!]!
+  describeRole(roleName: String!): Role!
+  listGrants(roleName: String!, object: String, objectName: String, dbName: String): [Grant!]!
+  listPrivilegeGroups: [PrivilegeGroup!]!
+
+  # ── Segments ─────────────────────────────────────────────────────────────
+  listSegments(collectionName: String!, dbName: String): [Segment!]!
+  listSegmentsPaginated(collectionName: String!, dbName: String, first: Int, after: String): SegmentConnection!
+
+  # ── Import Jobs ───────────────────────────────────────────────────────────
+  listImportJobs(collectionName: String, dbName: String): [ImportJob!]!
+  getImportJobProgress(jobID: String!): ImportJob!
+
+  # ── Compaction ────────────────────────────────────────────────────────────
+  getCompactionState(compactionID: Int64!): CompactionJob!
+  getCompactionPlans(compactionID: Int64!): CompactionJob!
+
+  # ── Server ────────────────────────────────────────────────────────────────
+  getServerVersion: ServerInfo!
+  getServerHealth: ServerHealth!
+  getMetrics: [Metric!]!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Additional query result types
+# ──────────────────────────────────────────────────────────────────────────────
+
+type CollectionStats {
+  collectionName: String!
+  rowCount: Int64!
+  dataSize: Int64
+  partitionStats: [PartitionStats!]
+}
+
+type PartitionStats {
+  partitionName: String!
+  rowCount: Int64!
+  dataSize: Int64
+}
+
+type ServerHealth {
+  isHealthy: Boolean!
+  reason: String
+  quotaStates: [QuotaState!]
+}
+
+type QuotaState {
+  code: String!
+  reason: String!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Root Mutation
+# ──────────────────────────────────────────────────────────────────────────────
+
+type Mutation {
+  # ── Collections ──────────────────────────────────────────────────────────
+  createCollection(input: CreateCollectionInput!): Boolean!
+  dropCollection(input: DropCollectionInput!): Boolean!
+  loadCollection(input: LoadCollectionInput!): Boolean!
+  releaseCollection(input: ReleaseCollectionInput!): Boolean!
+  renameCollection(input: RenameCollectionInput!): Boolean!
+  alterCollection(input: AlterCollectionInput!): Boolean!
+  flushCollection(collectionName: String!, dbName: String): FlushResult!
+  compactCollection(collectionName: String!, dbName: String): CompactResult!
+
+  # ── Partitions ───────────────────────────────────────────────────────────
+  createPartition(input: CreatePartitionInput!): Boolean!
+  dropPartition(input: DropPartitionInput!): Boolean!
+  loadPartitions(input: LoadPartitionsInput!): Boolean!
+  releasePartitions(input: ReleasePartitionsInput!): Boolean!
+
+  # ── Indexes ───────────────────────────────────────────────────────────────
+  createIndex(input: CreateIndexInput!): Boolean!
+  dropIndex(input: DropIndexInput!): Boolean!
+  alterIndex(input: AlterIndexInput!): Boolean!
+
+  # ── Aliases ───────────────────────────────────────────────────────────────
+  createAlias(input: CreateAliasInput!): Boolean!
+  dropAlias(input: DropAliasInput!): Boolean!
+  alterAlias(input: AlterAliasInput!): Boolean!
+
+  # ── Databases ─────────────────────────────────────────────────────────────
+  createDatabase(input: CreateDatabaseInput!): Boolean!
+  dropDatabase(input: DropDatabaseInput!): Boolean!
+  alterDatabase(input: AlterDatabaseInput!): Boolean!
+
+  # ── Data ─────────────────────────────────────────────────────────────────
+  insert(input: InsertInput!): InsertResult!
+  upsert(input: UpsertInput!): UpsertResult!
+  delete(input: DeleteInput!): DeleteResult!
+
+  # ── Import ────────────────────────────────────────────────────────────────
+  importData(input: ImportInput!): ImportJob!
+
+  # ── Users ─────────────────────────────────────────────────────────────────
+  createUser(input: CreateUserInput!): Boolean!
+  dropUser(userName: String!): Boolean!
+  updatePassword(input: UpdatePasswordInput!): Boolean!
+
+  # ── Roles / RBAC ─────────────────────────────────────────────────────────
+  createRole(input: CreateRoleInput!): Boolean!
+  dropRole(roleName: String!): Boolean!
+  grantPrivilege(input: GrantPrivilegeInput!): Boolean!
+  revokePrivilege(input: RevokePrivilegeInput!): Boolean!
+  grantRoleToUser(input: AssignRoleInput!): Boolean!
+  revokeRoleFromUser(input: AssignRoleInput!): Boolean!
+
+  # ── Privilege Groups ─────────────────────────────────────────────────────
+  createPrivilegeGroup(input: CreatePrivilegeGroupInput!): PrivilegeGroup!
+  dropPrivilegeGroup(groupName: String!): Boolean!
+  addPrivilegesToGroup(groupName: String!, privileges: [PrivilegeInput!]!): PrivilegeGroup!
+  removePrivilegesFromGroup(groupName: String!, privileges: [PrivilegeInput!]!): PrivilegeGroup!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Root Subscription
+# ──────────────────────────────────────────────────────────────────────────────
+
+type Subscription {
+  # Monitor collection load/release transitions
+  collectionLoadState(collectionName: String!, dbName: String): LoadProgress!
+
+  # Stream live search hits as vectors are inserted/indexed
+  liveSearch(input: SearchInput!): SearchHit!
+
+  # Monitor compaction job progress
+  compactionProgress(compactionID: Int64!): CompactionJob!
+
+  # Monitor bulk-import job progress
+  importJobProgress(jobID: String!): ImportJob!
+
+  # Stream insert events for change-data-capture patterns
+  dataChangeStream(collectionName: String!, dbName: String): DataChangeEvent!
+}
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Subscription event type
+# ──────────────────────────────────────────────────────────────────────────────
+
+type DataChangeEvent {
+  eventType: DataChangeEventType!
+  collectionName: String!
+  partitionName: String
+  insertCount: Int64
+  deleteCount: Int64
+  timestamp: Timestamp!
+}
+
+enum DataChangeEventType {
+  INSERT
+  DELETE
+  UPSERT
+  FLUSH
+}

@@ -2,88 +2,87 @@ aid: milvus
 url: https://raw.githubusercontent.com/api-evangelist/milvus/refs/heads/main/apis.yml
 name: Milvus
 kind: opensource
-description: >-
-  Milvus is an Apache 2.0 open-source vector database. It exposes a versioned REST API
-  alongside gRPC and language SDKs (Python, Go, Java, Node.js). Maintained by Zilliz;
-  LF AI & Data Foundation graduated project.
+description: Milvus is an Apache 2.0 open-source vector database. It exposes a versioned
+  REST API alongside gRPC and language SDKs (Python, Go, Java, Node.js). Maintained
+  by Zilliz; LF AI & Data Foundation graduated project.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Vector Database
-  - AI
-  - Embeddings
-  - Open Source
-  - Cloud-Native
+- Vector Database
+- AI
+- Embeddings
+- Open Source
+- Cloud-Native
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
 apis:
-  - aid: milvus:milvus-rest-api-v2
-    name: Milvus REST API v2
-    humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
-    baseURL: http://{milvus_host}:19530/v2/vectordb
-    tags:
-      - REST
-      - Collections
-      - Vectors
-      - Index
-      - Partitions
-    description: >-
-      Milvus v2 REST API covers collections, partitions, vectors, search, query, indexes,
-      and role/RBAC management. Authentication: Bearer token formed from
-      `username:password` when auth is enabled (off by default in self-hosted dev).
-    properties:
-      - type: Documentation
-        url: https://milvus.io/api-reference/restful/v2.5.x/About.md
-      - type: Authentication
-        url: https://milvus.io/api-reference/restful/v2.5.x/About.md
-      - type: SDK
-        title: Python (pymilvus)
-        url: https://github.com/milvus-io/pymilvus
-      - type: SDK
-        title: Go (milvus-sdk-go)
-        url: https://github.com/milvus-io/milvus-sdk-go
-      - type: SDK
-        title: Java (milvus-sdk-java)
-        url: https://github.com/milvus-io/milvus-sdk-java
-      - type: SDK
-        title: Node.js (milvus-sdk-node)
-        url: https://github.com/milvus-io/milvus-sdk-node
-  - aid: milvus:milvus-grpc
-    name: Milvus gRPC API
-    humanURL: https://milvus.io/docs/grpc.md
-    baseURL: grpc://{milvus_host}:19530
-    tags:
-      - gRPC
-      - High Throughput
-    description: >-
-      gRPC is the canonical, high-throughput interface to Milvus. The official SDKs are
-      gRPC-based; the REST API is a thin wrapper for non-Go/Python/Java clients.
-    properties:
-      - type: Documentation
-        url: https://milvus.io/docs/
-common:
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/the-milvus-project
-  - type: Website
-    url: https://milvus.io/
-  - type: Portal
+- aid: milvus:milvus-rest-api-v2
+  name: Milvus REST API v2
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - REST
+  - Collections
+  - Vectors
+  - Index
+  - Partitions
+  description: 'Milvus v2 REST API covers collections, partitions, vectors, search,
+    query, indexes, and role/RBAC management. Authentication: Bearer token formed
+    from `username:password` when auth is enabled (off by default in self-hosted dev).'
+  properties:
+  - type: Documentation
+    url: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  - type: Authentication
+    url: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  - type: SDK
+    title: Python (pymilvus)
+    url: https://github.com/milvus-io/pymilvus
+  - type: SDK
+    title: Go (milvus-sdk-go)
+    url: https://github.com/milvus-io/milvus-sdk-go
+  - type: SDK
+    title: Java (milvus-sdk-java)
+    url: https://github.com/milvus-io/milvus-sdk-java
+  - type: SDK
+    title: Node.js (milvus-sdk-node)
+    url: https://github.com/milvus-io/milvus-sdk-node
+  - url: graphql/milvus-graphql.md
+    type: GraphQL
+- aid: milvus:milvus-grpc
+  name: Milvus gRPC API
+  humanURL: https://milvus.io/docs/grpc.md
+  baseURL: grpc://{milvus_host}:19530
+  tags:
+  - gRPC
+  - High Throughput
+  description: gRPC is the canonical, high-throughput interface to Milvus. The official
+    SDKs are gRPC-based; the REST API is a thin wrapper for non-Go/Python/Java clients.
+  properties:
+  - type: Documentation
     url: https://milvus.io/docs/
-  - type: SourceCode
-    url: https://github.com/milvus-io/milvus
-  - type: Foundation
-    title: LF AI & Data
-    url: https://lfaidata.foundation/projects/milvus/
-  - type: CommercialOffering
-    title: Zilliz Cloud
-    url: https://zilliz.com/
-  - type: Plans
-    url: plans/milvus-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/milvus-rate-limits.yml
-  - type: FinOps
-    url: finops/milvus-finops.yml
-  - type: LLMsTxt
-    url: https://milvus.io/llms.txt
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/the-milvus-project
+- type: Website
+  url: https://milvus.io/
+- type: Portal
+  url: https://milvus.io/docs/
+- type: SourceCode
+  url: https://github.com/milvus-io/milvus
+- type: Foundation
+  title: LF AI & Data
+  url: https://lfaidata.foundation/projects/milvus/
+- type: CommercialOffering
+  title: Zilliz Cloud
+  url: https://zilliz.com/
+- type: Plans
+  url: plans/milvus-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/milvus-rate-limits.yml
+- type: FinOps
+  url: finops/milvus-finops.yml
+- type: LLMsTxt
+  url: https://milvus.io/llms.txt
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
