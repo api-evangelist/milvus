@@ -1,0 +1,493 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Milvus REST API",
+    "version": "2.5.x"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a collection"
+        },
+        {
+          "info": {
+            "name": "Describe a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/describe",
+            "params": [
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Describe a collection"
+        },
+        {
+          "info": {
+            "name": "List collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/list"
+          },
+          "docs": "List collections"
+        },
+        {
+          "info": {
+            "name": "Drop a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/drop",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drop a collection"
+        },
+        {
+          "info": {
+            "name": "Load a collection into memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/load",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load a collection into memory"
+        },
+        {
+          "info": {
+            "name": "Release a collection from memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/release",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Release a collection from memory"
+        },
+        {
+          "info": {
+            "name": "Rename a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/rename",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename a collection"
+        },
+        {
+          "info": {
+            "name": "Flush collection data to storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/flush",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Flush collection data to storage"
+        },
+        {
+          "info": {
+            "name": "Compact a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/compact",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compact a collection"
+        },
+        {
+          "info": {
+            "name": "Alter collection properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/alter-properties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Alter collection properties"
+        },
+        {
+          "info": {
+            "name": "Get a collection's load state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/get-load-state",
+            "params": [
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a collection's load state"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Insert entities/vectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/insert",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Insert entities/vectors"
+        },
+        {
+          "info": {
+            "name": "Upsert entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/upsert",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert entities"
+        },
+        {
+          "info": {
+            "name": "Delete entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete entities"
+        },
+        {
+          "info": {
+            "name": "Get entities by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/get",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get entities by id"
+        },
+        {
+          "info": {
+            "name": "Query entities with a scalar filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/query",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Query entities with a scalar filter"
+        },
+        {
+          "info": {
+            "name": "Vector similarity search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Vector similarity search"
+        },
+        {
+          "info": {
+            "name": "Hybrid (multi-vector) search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/hybrid_search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Hybrid (multi-vector) search"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/indexes/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an index"
+        },
+        {
+          "info": {
+            "name": "Drop an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/indexes/drop",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drop an index"
+        },
+        {
+          "info": {
+            "name": "List indexes for a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/indexes/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List indexes for a collection"
+        },
+        {
+          "info": {
+            "name": "Describe an index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/indexes/describe",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Describe an index"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Partitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a partition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/partitions/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a partition"
+        },
+        {
+          "info": {
+            "name": "Drop a partition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/partitions/drop",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drop a partition"
+        },
+        {
+          "info": {
+            "name": "List partitions for a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/partitions/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List partitions for a collection"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/users/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a user"
+        },
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/users/list"
+          },
+          "docs": "List users"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/roles/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a role"
+        },
+        {
+          "info": {
+            "name": "List roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/roles/list"
+          },
+          "docs": "List roles"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
