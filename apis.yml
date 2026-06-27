@@ -34,16 +34,16 @@ apis:
     url: https://milvus.io/api-reference/restful/v2.5.x/About.md
   - type: Authentication
     url: https://milvus.io/api-reference/restful/v2.5.x/About.md
-  - type: SDK
+  - type: SDKs
     title: Python (pymilvus)
     url: https://github.com/milvus-io/pymilvus
-  - type: SDK
+  - type: SDKs
     title: Go (milvus-sdk-go)
     url: https://github.com/milvus-io/milvus-sdk-go
-  - type: SDK
+  - type: SDKs
     title: Java (milvus-sdk-java)
     url: https://github.com/milvus-io/milvus-sdk-java
-  - type: SDK
+  - type: SDKs
     title: Node.js (milvus-sdk-node)
     url: https://github.com/milvus-io/milvus-sdk-node
   - url: graphql/milvus-graphql.md
@@ -81,7 +81,7 @@ common:
   url: rate-limits/milvus-rate-limits.yml
 - type: FinOps
   url: finops/milvus-finops.yml
-- type: LLMsTxt
+- type: LlmsText
   url: https://milvus.io/llms.txt
 maintainers:
 - FN: Kin Lane
