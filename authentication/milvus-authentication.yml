@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/milvus-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: |-
+    Bearer token of the form `username:password` (e.g. `root:milvus`) when
+    authentication is enabled.
+  sources:
+  - openapi/milvus-openapi.yml

@@ -61,6 +61,10 @@ apis:
   - type: Documentation
     url: https://milvus.io/docs/
 common:
+- type: DomainSecurity
+  url: security/milvus-domain-security.yml
+- type: Authentication
+  url: authentication/milvus-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/the-milvus-project
 - type: Website
@@ -83,6 +87,8 @@ common:
   url: finops/milvus-finops.yml
 - type: LlmsText
   url: https://milvus.io/llms.txt
+- type: Blog
+  url: https://milvus.io/blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
