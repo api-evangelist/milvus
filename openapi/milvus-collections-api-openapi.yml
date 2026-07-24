@@ -1,0 +1,240 @@
+openapi: 3.1.0
+info:
+  title: Milvus REST Collections API
+  description: 'RESTful API for the Milvus vector database (v2). Covers collections, entities,
+
+    indexes, partitions, users, and roles. Sourced from
+
+    https://milvus.io/api-reference/restful/v2.5.x.
+
+    '
+  version: 2.5.x
+  contact:
+    name: Milvus
+    url: https://milvus.io
+servers:
+- url: http://localhost:19530
+  description: Default local Milvus instance
+security:
+- BearerAuth: []
+tags:
+- name: Collections
+paths:
+  /v2/vectordb/collections/create:
+    post:
+      summary: Create a collection
+      operationId: createCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                dimension:
+                  type: integer
+                metricType:
+                  type: string
+                idType:
+                  type: string
+                schema:
+                  type: object
+                indexParams:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+  /v2/vectordb/collections/describe:
+    get:
+      summary: Describe a collection
+      operationId: describeCollection
+      tags:
+      - Collections
+      parameters:
+      - name: collectionName
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Collection details
+  /v2/vectordb/collections/list:
+    get:
+      summary: List collections
+      operationId: listCollections
+      tags:
+      - Collections
+      responses:
+        '200':
+          description: Collection names
+  /v2/vectordb/collections/drop:
+    post:
+      summary: Drop a collection
+      operationId: dropCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/load:
+    post:
+      summary: Load a collection into memory
+      operationId: loadCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/release:
+    post:
+      summary: Release a collection from memory
+      operationId: releaseCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/rename:
+    post:
+      summary: Rename a collection
+      operationId: renameCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                newCollectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/flush:
+    post:
+      summary: Flush collection data to storage
+      operationId: flushCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/compact:
+    post:
+      summary: Compact a collection
+      operationId: compactCollection
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/alter-properties:
+    post:
+      summary: Alter collection properties
+      operationId: alterCollectionProperties
+      tags:
+      - Collections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Success
+  /v2/vectordb/collections/get-load-state:
+    get:
+      summary: Get a collection's load state
+      operationId: getCollectionLoadState
+      tags:
+      - Collections
+      parameters:
+      - name: collectionName
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Load state
+components:
+  schemas:
+    StatusResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: object
+        message:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token of the form `username:password` (e.g. `root:milvus`) when
+
+        authentication is enabled.
+
+        '

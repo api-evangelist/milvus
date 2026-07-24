@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: Milvus REST Collections Entities API
+  description: 'RESTful API for the Milvus vector database (v2). Covers collections, entities,
+
+    indexes, partitions, users, and roles. Sourced from
+
+    https://milvus.io/api-reference/restful/v2.5.x.
+
+    '
+  version: 2.5.x
+  contact:
+    name: Milvus
+    url: https://milvus.io
+servers:
+- url: http://localhost:19530
+  description: Default local Milvus instance
+security:
+- BearerAuth: []
+tags:
+- name: Entities
+paths:
+  /v2/vectordb/entities/insert:
+    post:
+      summary: Insert entities/vectors
+      operationId: insertEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                data:
+                  type: array
+                  items:
+                    type: object
+                partitionName:
+                  type: string
+      responses:
+        '200':
+          description: Inserted
+  /v2/vectordb/entities/upsert:
+    post:
+      summary: Upsert entities
+      operationId: upsertEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                data:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: Upserted
+  /v2/vectordb/entities/delete:
+    post:
+      summary: Delete entities
+      operationId: deleteEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                filter:
+                  type: string
+      responses:
+        '200':
+          description: Deleted
+  /v2/vectordb/entities/get:
+    post:
+      summary: Get entities by id
+      operationId: getEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                id:
+                  oneOf:
+                  - type: integer
+                  - type: string
+                  - type: array
+                    items:
+                      type: integer
+                outputFields:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Entities
+  /v2/vectordb/entities/query:
+    post:
+      summary: Query entities with a scalar filter
+      operationId: queryEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                filter:
+                  type: string
+                outputFields:
+                  type: array
+                  items:
+                    type: string
+                limit:
+                  type: integer
+                offset:
+                  type: integer
+      responses:
+        '200':
+          description: Query results
+  /v2/vectordb/entities/search:
+    post:
+      summary: Vector similarity search
+      operationId: searchEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                data:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: number
+                annsField:
+                  type: string
+                limit:
+                  type: integer
+                filter:
+                  type: string
+                outputFields:
+                  type: array
+                  items:
+                    type: string
+                searchParams:
+                  type: object
+      responses:
+        '200':
+          description: Search results
+  /v2/vectordb/entities/hybrid_search:
+    post:
+      summary: Hybrid (multi-vector) search
+      operationId: hybridSearchEntities
+      tags:
+      - Entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                search:
+                  type: array
+                  items:
+                    type: object
+                rerank:
+                  type: object
+                limit:
+                  type: integer
+      responses:
+        '200':
+          description: Hybrid search results
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token of the form `username:password` (e.g. `root:milvus`) when
+
+        authentication is enabled.
+
+        '

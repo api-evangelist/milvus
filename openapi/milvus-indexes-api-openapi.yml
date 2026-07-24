@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: Milvus REST Collections Indexes API
+  description: 'RESTful API for the Milvus vector database (v2). Covers collections, entities,
+
+    indexes, partitions, users, and roles. Sourced from
+
+    https://milvus.io/api-reference/restful/v2.5.x.
+
+    '
+  version: 2.5.x
+  contact:
+    name: Milvus
+    url: https://milvus.io
+servers:
+- url: http://localhost:19530
+  description: Default local Milvus instance
+security:
+- BearerAuth: []
+tags:
+- name: Indexes
+paths:
+  /v2/vectordb/indexes/create:
+    post:
+      summary: Create an index
+      operationId: createIndex
+      tags:
+      - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                indexParams:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: Index created
+  /v2/vectordb/indexes/drop:
+    post:
+      summary: Drop an index
+      operationId: dropIndex
+      tags:
+      - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                indexName:
+                  type: string
+      responses:
+        '200':
+          description: Index dropped
+  /v2/vectordb/indexes/list:
+    post:
+      summary: List indexes for a collection
+      operationId: listIndexes
+      tags:
+      - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+      responses:
+        '200':
+          description: Indexes
+  /v2/vectordb/indexes/describe:
+    post:
+      summary: Describe an index
+      operationId: describeIndex
+      tags:
+      - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                collectionName:
+                  type: string
+                indexName:
+                  type: string
+      responses:
+        '200':
+          description: Index details
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token of the form `username:password` (e.g. `root:milvus`) when
+
+        authentication is enabled.
+
+        '

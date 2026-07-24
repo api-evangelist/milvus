@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: Milvus REST Collections Users API
+  description: 'RESTful API for the Milvus vector database (v2). Covers collections, entities,
+
+    indexes, partitions, users, and roles. Sourced from
+
+    https://milvus.io/api-reference/restful/v2.5.x.
+
+    '
+  version: 2.5.x
+  contact:
+    name: Milvus
+    url: https://milvus.io
+servers:
+- url: http://localhost:19530
+  description: Default local Milvus instance
+security:
+- BearerAuth: []
+tags:
+- name: Users
+paths:
+  /v2/vectordb/users/create:
+    post:
+      summary: Create a user
+      operationId: createUser
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Created
+  /v2/vectordb/users/list:
+    post:
+      summary: List users
+      operationId: listUsers
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Users
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Bearer token of the form `username:password` (e.g. `root:milvus`) when
+
+        authentication is enabled.
+
+        '
