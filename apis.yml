@@ -5,7 +5,20 @@ kind: opensource
 description: Milvus is an Apache 2.0 open-source vector database. It exposes a versioned
   REST API alongside gRPC and language SDKs (Python, Go, Java, Node.js). Maintained
   by Zilliz; LF AI & Data Foundation graduated project.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/milvus.png
 tags:
 - Vector Database
 - AI
@@ -26,9 +39,10 @@ apis:
   - Vectors
   - Index
   - Partitions
-  description: 'Milvus v2 REST API covers collections, partitions, vectors, search,
-    query, indexes, and role/RBAC management. Authentication: Bearer token formed
-    from `username:password` when auth is enabled (off by default in self-hosted dev).'
+  description: >-
+    Milvus v2 REST API covers collections, partitions, vectors, search, query, indexes, and role/RBAC
+    management. Authentication: Bearer token formed from `username:password` when auth is enabled (off
+    by default in self-hosted dev).
   properties:
   - type: Documentation
     url: https://milvus.io/api-reference/restful/v2.5.x/About.md
@@ -55,11 +69,72 @@ apis:
   tags:
   - gRPC
   - High Throughput
-  description: gRPC is the canonical, high-throughput interface to Milvus. The official
-    SDKs are gRPC-based; the REST API is a thin wrapper for non-Go/Python/Java clients.
+  description: >-
+    gRPC is the canonical, high-throughput interface to Milvus. The official SDKs are gRPC-based; the
+    REST API is a thin wrapper for non-Go/Python/Java clients.
   properties:
   - type: Documentation
     url: https://milvus.io/docs/
+- aid: milvus:milvus-collections-api
+  name: Milvus Collections API
+  description: The Collections API from Milvus — 11 operation(s) for collections.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-collections-api-openapi.yml
+- aid: milvus:milvus-entities-api
+  name: Milvus Entities API
+  description: The Entities API from Milvus — 7 operation(s) for entities.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-entities-api-openapi.yml
+- aid: milvus:milvus-indexes-api
+  name: Milvus Indexes API
+  description: The Indexes API from Milvus — 4 operation(s) for indexes.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Indexes
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-indexes-api-openapi.yml
+- aid: milvus:milvus-partitions-api
+  name: Milvus Partitions API
+  description: The Partitions API from Milvus — 3 operation(s) for partitions.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Partitions
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-partitions-api-openapi.yml
+- aid: milvus:milvus-roles-api
+  name: Milvus Roles API
+  description: The Roles API from Milvus — 2 operation(s) for roles.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-roles-api-openapi.yml
+- aid: milvus:milvus-users-api
+  name: Milvus Users API
+  description: The Users API from Milvus — 2 operation(s) for users.
+  humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
+  baseURL: http://{milvus_host}:19530/v2/vectordb
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/milvus-users-api-openapi.yml
 common:
 - type: AgenticAccess
   url: agentic-access/milvus-agentic-access.yml
