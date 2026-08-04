@@ -1,0 +1,24 @@
+{
+  "provider": "milvus",
+  "sources": [
+    "milvus-collections-api-openapi.yml",
+    "milvus-entities-api-openapi.yml",
+    "milvus-indexes-api-openapi.yml",
+    "milvus-partitions-api-openapi.yml",
+    "milvus-roles-api-openapi.yml",
+    "milvus-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "milvus-collections-api-openapi.yml",
+    "milvus-entities-api-openapi.yml",
+    "milvus-indexes-api-openapi.yml",
+    "milvus-partitions-api-openapi.yml",
+    "milvus-roles-api-openapi.yml",
+    "milvus-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
