@@ -136,6 +136,17 @@ apis:
   - type: OpenAPI
     url: openapi/milvus-users-api-openapi.yml
 common:
+- type: IssueTracker
+  url: https://github.com/milvus-io/milvus/issues
+- type: Releases
+  url: https://github.com/milvus-io/milvus/releases
+- type: CodeOfConduct
+  url: https://github.com/milvus-io/milvus/blob/master/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/milvus-io/milvus/blob/master/CONTRIBUTING.md
+- type: License
+  name: Apache-2.0
+  url: https://github.com/milvus-io/milvus/blob/master/LICENSE
 - type: AgenticAccess
   url: agentic-access/milvus-agentic-access.yml
 - type: DomainSecurity
