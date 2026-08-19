@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Milvus REST Collections API",
+    "version": "2.5.x"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a collection"
+        },
+        {
+          "info": {
+            "name": "Describe a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/describe",
+            "params": [
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Describe a collection"
+        },
+        {
+          "info": {
+            "name": "List collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/list"
+          },
+          "docs": "List collections"
+        },
+        {
+          "info": {
+            "name": "Drop a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/drop",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drop a collection"
+        },
+        {
+          "info": {
+            "name": "Load a collection into memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/load",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load a collection into memory"
+        },
+        {
+          "info": {
+            "name": "Release a collection from memory",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/release",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Release a collection from memory"
+        },
+        {
+          "info": {
+            "name": "Rename a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/rename",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename a collection"
+        },
+        {
+          "info": {
+            "name": "Flush collection data to storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/flush",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Flush collection data to storage"
+        },
+        {
+          "info": {
+            "name": "Compact a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/compact",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compact a collection"
+        },
+        {
+          "info": {
+            "name": "Alter collection properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/collections/alter-properties",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Alter collection properties"
+        },
+        {
+          "info": {
+            "name": "Get a collection's load state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:19530/v2/vectordb/collections/get-load-state",
+            "params": [
+              {
+                "name": "collectionName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a collection's load state"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

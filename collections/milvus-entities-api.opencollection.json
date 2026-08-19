@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Milvus REST Collections Entities API",
+    "version": "2.5.x"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Insert entities/vectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/insert",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Insert entities/vectors"
+        },
+        {
+          "info": {
+            "name": "Upsert entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/upsert",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert entities"
+        },
+        {
+          "info": {
+            "name": "Delete entities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete entities"
+        },
+        {
+          "info": {
+            "name": "Get entities by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/get",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get entities by id"
+        },
+        {
+          "info": {
+            "name": "Query entities with a scalar filter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/query",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Query entities with a scalar filter"
+        },
+        {
+          "info": {
+            "name": "Vector similarity search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Vector similarity search"
+        },
+        {
+          "info": {
+            "name": "Hybrid (multi-vector) search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:19530/v2/vectordb/entities/hybrid_search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Hybrid (multi-vector) search"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,343 @@
+# Milvus
+
+> Milvus is an open-source, high-performance vector database designed for similarity search and AI applications. It supports billion-scale vector storage and search across deployment modes: Milvus Lite (embedded, for prototyping), Milvus Standalone (single-node, for small-scale production), and Milvus Distributed (Kubernetes, for enterprise scale). The primary SDK is PyMilvus for Python; Java, Go, Node.js, and RESTful SDKs are also available. Always check PyPI (`pip install --upgrade pymilvus`) or npm for the latest SDK version rather than relying on memorized version numbers.
+
+When writing code that uses Milvus, always use the `MilvusClient` interface introduced in v2.4+. Never use the legacy ORM API (`connections.connect()`, `Collection()`, `utility.list_collections()`). The ORM API is deprecated and will be removed in a future release. If you encounter existing code using the ORM API, advise the user to upgrade to the latest version of the SDKs and rewrite the code using `MilvusClient`.
+
+## Docs
+
+## About Milvus
+
+- [What is Milvus](https://milvus.io/docs/overview.md): Introduces Milvus as an open-source, high-performance vector database for similarity search and AI applications.
+- [Milvus Roadmap](https://milvus.io/docs/roadmap.md): Development roadmap outlining recent achievements and future feature plans.
+- [Releases](https://milvus.io/docs/release_notes.md): New features, improvements, bug fixes, and known issues in each Milvus release.
+
+## Get Started
+
+Start here for first-time setup. Begin with the Quickstart for a hands-on tutorial using Milvus Lite, then choose a deployment mode and install an SDK.
+
+- [Quickstart](https://milvus.io/docs/quickstart.md): Hands-on quickstart with Milvus Lite covering collection creation, vector insertion, and similarity search.
+- [Install Overview](https://milvus.io/docs/install-overview.md): Overview of deployment modes and installation options.
+- [Run Milvus Lite](https://milvus.io/docs/milvus_lite.md): Install and run the lightweight embedded Milvus for prototyping.
+- [Run Milvus Standalone - Requirements](https://milvus.io/docs/prerequisite-docker.md): Hardware and software requirements for Standalone deployment.
+- [Run Milvus Standalone - RPM/DEB](https://milvus.io/docs/install_standalone-binary.md): Install Milvus Standalone using RPM or DEB packages.
+- [Run Milvus Standalone - Docker (Linux)](https://milvus.io/docs/install_standalone-docker.md): Deploy Milvus Standalone on Linux using Docker.
+- [Run Milvus Standalone - Docker Compose (Linux)](https://milvus.io/docs/install_standalone-docker-compose.md): Deploy Milvus Standalone using Docker Compose on Linux.
+- [Run Milvus Standalone - Docker Desktop (Windows)](https://milvus.io/docs/install_standalone-windows.md): Run Milvus Standalone on Windows using Docker Desktop.
+- [Run Milvus Distributed - Requirements](https://milvus.io/docs/prerequisite-helm.md): Hardware and software requirements for distributed cluster deployment.
+- [Run Milvus Distributed - Milvus Operator](https://milvus.io/docs/install_cluster-milvusoperator.md): Deploy a Milvus cluster on Kubernetes using the Milvus Operator.
+- [Run Milvus Distributed - Helm Chart](https://milvus.io/docs/install_cluster-helm.md): Deploy a Milvus cluster on Kubernetes using Helm.
+- [Run Milvus with GPU - Requirements](https://milvus.io/docs/prerequisite-gpu.md): GPU hardware and driver requirements.
+- [Run Milvus with GPU - Helm Chart](https://milvus.io/docs/install_cluster-helm-gpu.md): Deploy Milvus with GPU support using Helm.
+- [Run Milvus with GPU - Docker Compose](https://milvus.io/docs/install_standalone-docker-compose-gpu.md): Deploy Milvus Standalone with GPU support using Docker Compose.
+- [Install PyMilvus](https://milvus.io/docs/install-pymilvus.md): Install the Python SDK (PyMilvus).
+- [Install Java SDK](https://milvus.io/docs/install-java.md): Install the Java SDK for Milvus.
+- [Install Go SDK](https://milvus.io/docs/install-go.md): Install the Go SDK for Milvus.
+- [Install Node.js SDK](https://milvus.io/docs/install-node.md): Install the Node.js SDK for Milvus.
+- [Connect to Milvus Server](https://milvus.io/docs/connect-to-milvus-server.md): How to establish connections to Milvus from different SDKs.
+
+## Concepts
+
+Core concepts for understanding Milvus's data model, distance metrics, consistency guarantees, and multi-tenancy strategies.
+
+- [Metric Types](https://milvus.io/docs/metric.md): Distance metrics (L2, IP, COSINE, etc.) supported for vector similarity search.
+- [Similarity Metrics Visualized](https://milvus.io/learn-milvus/metric): Interactive playground showing how L2, cosine, and inner product change which neighbors count as nearest.
+- [Multi-tenancy](https://milvus.io/docs/multi_tenancy.md): Multi-tenancy support for isolating data across users or clients.
+- [Terminology](https://milvus.io/docs/glossary.md): Glossary of Milvus-specific terms and definitions.
+- [In-memory Replica](https://milvus.io/docs/replica.md): In-memory replicas for higher availability and read throughput.
+
+## User Guide
+
+## Database
+
+- [Manage Databases](https://milvus.io/docs/manage_databases.md): Create, select, and manage databases (logical groups of collections).
+
+## Collections
+
+Create and manage collections — the primary data container in Milvus, analogous to a table in a relational database. Each collection has a schema that defines its fields.
+
+- [Collection Explained](https://milvus.io/docs/manage-collections.md): Overview of collection lifecycle: create, list, load, release, and drop.
+- [Create Collection](https://milvus.io/docs/create-collection.md): Create a collection with a defined schema, index, and consistency level.
+- [View Collections](https://milvus.io/docs/view-collections.md): List and inspect existing collections.
+- [Modify Collection](https://milvus.io/docs/modify-collection.md): Modify collection properties such as TTL and consistency level.
+- [Load & Release](https://milvus.io/docs/load-and-release.md): Load a collection into memory before search, and release it to free resources.
+- [Set Collection TTL](https://milvus.io/docs/set-collection-ttl.md): Configure time-to-live for automatic data expiration.
+- [Set Consistency Level](https://milvus.io/docs/tune_consistency.md): Configure read consistency levels (strong, bounded, session, eventually).
+- [Manage Partitions](https://milvus.io/docs/manage-partitions.md): Create and manage partitions for data organization.
+- [Manage Aliases](https://milvus.io/docs/manage-aliases.md): Assign and manage aliases for easier collection reference.
+- [Drop Collection](https://milvus.io/docs/drop-collection.md): Permanently delete a collection and all its data.
+
+## Schema & Data Fields
+
+Define the schema and fields in a collection. A collection schema is immutable after creation in Milvus v2.5.x and earlier — you cannot add, modify, or delete fields once the collection is created. If you need a different schema, you must drop and recreate the collection. In v2.6+, you can add new fields using `add_collection_field()` but cannot modify or delete existing fields. Primary keys must be either `DataType.INT64` or `DataType.VARCHAR` — composite primary keys are not supported. Primary keys must be unique across the entire collection, including across partitions. For full-text search using BM25, the BM25 function and text analyzer must be defined at collection creation time — they cannot be added afterward.
+
+- [Schema Explained](https://milvus.io/docs/schema.md): Overview of collection schemas, field types, and constraints.
+- [Primary Field & AutoID](https://milvus.io/docs/primary-field.md): Configure the primary key field (INT64 or VARCHAR only) and auto-generated IDs.
+- [Dense Vector](https://milvus.io/docs/dense-vector.md): Configure dense (float) vector fields for similarity search.
+- [Binary Vector](https://milvus.io/docs/binary-vector.md): Configure binary vector fields for Hamming or Jaccard distance.
+- [Sparse Vector](https://milvus.io/docs/sparse_vector.md): Configure sparse vector fields for lexical or hybrid search.
+- [String Field](https://milvus.io/docs/string.md): Working with VARCHAR string fields and constraints.
+- [Number Field](https://milvus.io/docs/number.md): Working with integer and floating-point scalar fields.
+- [JSON Field Overview](https://milvus.io/docs/json-field-overview.md): Store and query semi-structured JSON data.
+- [JSON Indexing](https://milvus.io/docs/json-indexing.md): Create indexes on JSON field paths for efficient querying.
+- [JSON Shredding](https://milvus.io/docs/json-shredding.md): Automatically extract JSON fields into columnar storage for performance.
+- [Array Field](https://milvus.io/docs/array_data_type.md): Store and query fixed-type array fields.
+- [Array of Structs](https://milvus.io/docs/array-of-structs.md): Model arrays of structured objects using JSON fields.
+- [Geometry Field](https://milvus.io/docs/geometry-field.md): Store and query geospatial data.
+- [TIMESTAMPTZ Field](https://milvus.io/docs/timestamptz-field.md): Store timezone-aware timestamp data.
+- [Dynamic Field](https://milvus.io/docs/enable-dynamic-field.md): Enable dynamic fields to store key-value pairs without predefined schema.
+- [Nullable & Default](https://milvus.io/docs/nullable-and-default.md): Set fields as nullable or with default values. Note: vector, JSON, and Array fields do not support nullable.
+- [Analyzer Overview](https://milvus.io/docs/analyzer-overview.md): Configure text analyzers for full-text search and BM25. Must be defined at collection creation time.
+- [Multi-language Analyzers](https://milvus.io/docs/multi-language-analyzers.md): Analyzer support for multiple languages.
+- [Choose the Right Analyzer](https://milvus.io/docs/choose-the-right-analyzer-for-your-use-case.md): Guidance on selecting analyzers for your use case.
+- [Alter Collection Field](https://milvus.io/docs/alter-collection-field.md): Modify properties of existing fields.
+- [Add Fields to an Existing Collection](https://milvus.io/docs/add-fields-to-an-existing-collection.md): Add new fields to an existing collection (v2.6+ only).
+- [Data Model Design for Search](https://milvus.io/docs/schema-hands-on.md): Best practices for designing schemas optimized for search.
+- [Data Model Design with Array of Structs](https://milvus.io/docs/best-practices-for-array-of-structs.md): Best practices for modeling arrays of structured data.
+
+## Insert & Delete
+
+Insert, upsert, and delete entities in a collection. To update existing entities, use `client.upsert()` — there is no `client.update()` method. The `upsert()` method inserts the entity if the primary key does not exist, or replaces the entire entity if it does. Use `client.insert()` only for new data that you are certain does not conflict with existing primary keys.
+
+- [Insert Entities](https://milvus.io/docs/insert-update-delete.md): Insert new entities into a collection.
+- [Upsert Entities](https://milvus.io/docs/upsert-entities.md): Insert or replace entities by primary key.
+- [Delete Entities](https://milvus.io/docs/delete-entities.md): Delete entities by primary key or filter expression.
+
+## Indexes
+
+Create and manage indexes on vector and scalar fields. An index must be created on vector fields before a collection can be loaded and searched. AUTOINDEX is recommended for most use cases.
+
+- [Index Explained](https://milvus.io/docs/index-explained.md): How indexing works in Milvus, including index types, parameters, and build process.
+- [Learn Milvus: Interactive Index Visualizations](https://milvus.io/learn-milvus): Interactive visualizations of how IVF, HNSW, and DiskANN indexes search, with tunable parameters.
+- [IVF Visualized](https://milvus.io/learn-milvus/ivf): Side-by-side FLAT vs IVF search animation with a live nprobe/recall tradeoff.
+- [HNSW Visualized](https://milvus.io/learn-milvus/hnsw): Step-by-step walk through the HNSW layered graph with tunable M and ef.
+- [DiskANN Visualized](https://milvus.io/learn-milvus/diskann): Animation of DiskANN's PQ-in-RAM beam search and SSD re-ranking.
+- [FLAT](https://milvus.io/docs/flat.md): Brute-force index for exact search on small datasets.
+- [IVF_FLAT](https://milvus.io/docs/ivf-flat.md): Inverted file index for memory-constrained scenarios.
+- [IVF_PQ](https://milvus.io/docs/ivf-pq.md): Inverted file index with product quantization for reduced memory.
+- [HNSW](https://milvus.io/docs/hnsw.md): Graph-based index for high-recall in-memory workloads.
+- [HNSW_SQ](https://milvus.io/docs/hnsw-sq.md): HNSW with scalar quantization for reduced memory.
+- [HNSW_PQ](https://milvus.io/docs/hnsw-pq.md): HNSW with product quantization for further memory reduction.
+- [DISKANN](https://milvus.io/docs/diskann.md): Disk-based index for datasets larger than RAM.
+- [SCANN](https://milvus.io/docs/scann.md): ScaNN index for fast approximate search.
+- [SPARSE_INVERTED_INDEX](https://milvus.io/docs/sparse-inverted-index.md): Index for sparse vector fields.
+- [BITMAP](https://milvus.io/docs/bitmap.md): Bitmap index for low-cardinality scalar fields.
+- [INVERTED](https://milvus.io/docs/inverted.md): Inverted index for scalar fields supporting term-level queries.
+- [GPU_CAGRA](https://milvus.io/docs/gpu-cagra.md): GPU-accelerated graph index.
+- [GPU_IVF_FLAT](https://milvus.io/docs/gpu-ivf-flat.md): GPU-accelerated IVF_FLAT index.
+- [GPU_IVF_PQ](https://milvus.io/docs/gpu-ivf-pq.md): GPU-accelerated IVF_PQ index.
+- [GPU_BRUTE_FORCE](https://milvus.io/docs/gpu-brute-force.md): GPU-accelerated brute-force search.
+
+## Search
+
+Perform similarity search, filtered queries, and hybrid search. Always ensure the collection is loaded before searching. When using hybrid search (`client.hybrid_search()`), each `AnnSearchRequest` accepts exactly one query vector — you cannot pass multiple query vectors in a single sub-request. To search multiple vector fields, create one `AnnSearchRequest` per vector field. Each hybrid search operation accepts only one ranker (e.g., `WeightedRanker` or `RRFRanker`) — you cannot chain multiple rankers.
+
+- [Basic ANN Search](https://milvus.io/docs/single-vector-search.md): Basic approximate nearest neighbor search on a single vector field.
+- [Filtered Search](https://milvus.io/docs/filtered-search.md): Combine vector similarity with scalar filter expressions.
+- [Range Search](https://milvus.io/docs/range-search.md): Search with distance constraints instead of top-K.
+- [Grouping Search](https://milvus.io/docs/grouping-search.md): Group search results by a scalar field value.
+- [Primary-Key Search](https://milvus.io/docs/primary-key-search.md): Retrieve entities directly by primary key.
+- [Hybrid Search](https://milvus.io/docs/multi-vector-search.md): Search across multiple vector fields and combine results with a ranker.
+- [Query](https://milvus.io/docs/get-and-scalar-query.md): Retrieve entities by filter expression without vector similarity.
+- [Filtering Explained](https://milvus.io/docs/boolean.md): Syntax reference for filter expressions used in search and query.
+- [Basic Operators](https://milvus.io/docs/basic-operators.md): Comparison, logical, and arithmetic operators for filter expressions.
+- [Filtering Templating](https://milvus.io/docs/filtering-templating.md): Use templates to construct dynamic filter expressions.
+- [JSON Operators](https://milvus.io/docs/json-operators.md): Operators for filtering on JSON fields.
+- [Array Operators](https://milvus.io/docs/array-operators.md): Operators for filtering on array fields.
+- [Random Sampling](https://milvus.io/docs/random-sampling.md): Randomly sample entities from a collection.
+- [Geometry Operators](https://milvus.io/docs/geometry-operators.md): Operators for geospatial filtering.
+- [Full Text Search](https://milvus.io/docs/full-text-search.md): BM25-based keyword search on text fields.
+- [Text Match](https://milvus.io/docs/keyword-match.md): Filter results by keyword matching on text fields.
+- [Text Highlighter](https://milvus.io/docs/text-highlighter.md): Highlight matching text in search results.
+- [Phrase Match](https://milvus.io/docs/phrase-match.md): Match exact phrases in text fields.
+- [Search with Embedding Lists](https://milvus.io/docs/search-with-embedding-lists.md): Search using multi-vector representations like ColBERT and ColPali.
+- [Elasticsearch Queries to Milvus](https://milvus.io/docs/elasticsearch-queries-to-milvus.md): Translate Elasticsearch queries to Milvus filter expressions.
+- [Search Iterators](https://milvus.io/docs/with-iterators.md): Iterate over large result sets. Supports basic ANN search only, not hybrid search.
+- [Use Partition Key](https://milvus.io/docs/use-partition-key.md): Use partition keys for efficient multi-tenant data isolation.
+
+## Embeddings & Reranking
+
+Built-in integration with embedding and reranking models.
+
+- [Embedding Function Overview](https://milvus.io/docs/embedding-function-overview.md): Overview of built-in embedding model integrations.
+- [OpenAI](https://milvus.io/docs/openai.md): Generate embeddings with OpenAI.
+- [Azure OpenAI](https://milvus.io/docs/azure-openai.md): Generate embeddings with Azure OpenAI.
+- [DashScope](https://milvus.io/docs/dashscope.md): Generate embeddings with DashScope.
+- [Bedrock](https://milvus.io/docs/bedrock.md): Generate embeddings with AWS Bedrock.
+- [Vertex AI](https://milvus.io/docs/vertex-ai.md): Generate embeddings with Google Vertex AI.
+- [Voyage AI](https://milvus.io/docs/voyage-ai.md): Generate embeddings with Voyage AI.
+- [Cohere](https://milvus.io/docs/cohere.md): Generate embeddings with Cohere.
+- [SiliconFlow](https://milvus.io/docs/siliconflow.md): Generate embeddings with SiliconFlow.
+- [Hugging Face TEI](https://milvus.io/docs/hugging-face-tei.md): Generate embeddings with Hugging Face Text Embeddings Inference.
+- [Weighted Ranker](https://milvus.io/docs/weighted-ranker.md): Combine search results using weighted scoring.
+- [RRF Ranker](https://milvus.io/docs/rrf-ranker.md): Combine search results using Reciprocal Rank Fusion.
+- [Boost Ranker](https://milvus.io/docs/boost-ranker.md): Apply field-specific boosting to search results.
+- [Decay Ranker Overview](https://milvus.io/docs/decay-ranker-overview.md): Apply time-decay or distance-decay functions to search results.
+- [Model Ranker Overview](https://milvus.io/docs/model-ranker-overview.md): Rerank search results using ML models (vLLM, TEI, Cohere, Voyage).
+
+## Storage Optimization
+
+Optimize storage and memory usage for large-scale deployments.
+
+- [Use mmap](https://milvus.io/docs/mmap.md): Memory-map data files to reduce memory usage.
+- [Clustering Compaction](https://milvus.io/docs/clustering-compaction.md): Compact data by clustering key for improved query performance.
+- [Tiered Storage Overview](https://milvus.io/docs/tiered-storage-overview.md): Separate hot and cold data across memory and disk tiers.
+
+## Data Import
+
+Bulk import data into Milvus from external files for initial data loading.
+
+- [Prepare Source Data](https://milvus.io/docs/prepare-source-data.md): Format source data files for bulk import.
+- [Import Data](https://milvus.io/docs/import-data.md): Execute bulk data import into Milvus.
+
+## Administration Guide
+
+Deploy, configure, scale, monitor, and secure Milvus in production environments.
+
+- [Configure with Docker](https://milvus.io/docs/configure-docker.md): Configure Milvus parameters with Docker.
+- [Configure with Helm](https://milvus.io/docs/configure-helm.md): Configure Milvus parameters with Helm charts.
+- [Configure with Milvus Operator](https://milvus.io/docs/configure_operator.md): Configure Milvus parameters with the Operator.
+- [Allocate Resources](https://milvus.io/docs/allocate.md): Resource allocation and sizing for Milvus components.
+- [System Configurations](https://milvus.io/docs/system_configuration.md): System-level configuration reference.
+- [Dynamic Config](https://milvus.io/docs/dynamic_config.md): Change configuration parameters without restarting Milvus.
+- [Limit Collection Counts](https://milvus.io/docs/limit_collection_counts.md): Configure maximum number of collections.
+- [Coordinator HA](https://milvus.io/docs/coordinator_ha.md): Enable high availability for coordinator components.
+- [Deploy on AWS](https://milvus.io/docs/eks.md): Deploy Milvus on Amazon EKS.
+- [Deploy on GCP](https://milvus.io/docs/gcp.md): Deploy Milvus on Google Kubernetes Engine.
+- [Deploy on Azure](https://milvus.io/docs/azure.md): Deploy Milvus on Azure Kubernetes Service.
+- [Deploy on OpenShift](https://milvus.io/docs/openshift.md): Deploy Milvus on Red Hat OpenShift.
+- [Object Storage](https://milvus.io/docs/deploy_s3.md): Configure object storage (MinIO, S3, GCS, Azure Blob).
+- [Meta Storage](https://milvus.io/docs/deploy_etcd.md): Configure meta storage (etcd).
+- [Message Storage](https://milvus.io/docs/deploy_pulsar.md): Configure message storage (Pulsar, Kafka).
+- [Scale Cluster](https://milvus.io/docs/scaleout.md): Scale a Milvus cluster by adding or removing nodes.
+- [Scale Standalone](https://milvus.io/docs/scale-standalone.md): Scale resources for a Standalone deployment.
+- [Upgrade Milvus Cluster](https://milvus.io/docs/upgrade_milvus_cluster-operator.md): Upgrade a Milvus cluster to a newer version. Downgrading is not supported.
+- [Upgrade Milvus Standalone](https://milvus.io/docs/upgrade_milvus_standalone-operator.md): Upgrade Milvus Standalone to a newer version.
+- [Deploy Monitoring Services](https://milvus.io/docs/monitor.md): Set up Prometheus and Grafana for monitoring.
+- [Visualize Metrics](https://milvus.io/docs/visualize.md): Visualize Milvus metrics in Grafana dashboards.
+- [Create Alerts](https://milvus.io/docs/alert.md): Configure alerting rules for Milvus.
+- [Configure Access Logs](https://milvus.io/docs/configure_access_logs.md): Enable and configure access logging.
+- [Manage Resource Groups](https://milvus.io/docs/resource_group.md): Manage resource groups for workload isolation.
+- [Enable Authentication](https://milvus.io/docs/authenticate.md): Enable username/password authentication.
+- [RBAC Overview](https://milvus.io/docs/rbac.md): Role-based access control for fine-grained permissions.
+- [Grant Privileges](https://milvus.io/docs/grant_privileges.md): Grant specific operation privileges to roles.
+- [Grant Roles](https://milvus.io/docs/grant_roles.md): Assign roles to users.
+- [Encryption in Transit](https://milvus.io/docs/tls.md): Secure connections with TLS encryption.
+- [Milvus WebUI](https://milvus.io/docs/milvus-webui.md): Built-in web UI for monitoring system status.
+
+## Tools
+
+GUI, CLI, backup, and debugging tools for managing Milvus.
+
+- [Attu (Milvus GUI)](https://github.com/zilliztech/attu): GUI tool for managing Milvus instances, browsing collections, and running queries.
+- [Milvus Backup Overview](https://milvus.io/docs/milvus_backup_overview.md): Back up and restore collections using milvus-backup.
+- [Milvus Backup CLI](https://milvus.io/docs/milvus_backup_cli.md): Backup and restore commands reference.
+- [Birdwatcher Overview](https://milvus.io/docs/birdwatcher_overview.md): Debugging tool for inspecting Milvus internal state via etcd.
+- [Milvus CLI Overview](https://milvus.io/docs/cli_overview.md): Command-line tool for interacting with Milvus.
+- [Milvus CLI Commands](https://milvus.io/docs/cli_commands.md): CLI commands reference.
+- [Spark Connector](https://milvus.io/docs/integrate_with_spark.md): Bulk import data from Apache Spark.
+- [Milvus VTS](https://github.com/zilliztech/vts): Vector Transmission Service for data migration between collections.
+- [Milvus Sizing Tool](https://milvus.io/tools/sizing/): Estimate resource requirements for your deployment.
+- [SDK Code Helper (MCP)](https://milvus.io/docs/milvus-sdk-helper-mcp.md): MCP-based code generation helper for Milvus SDKs.
+
+## Integrations
+
+Connect Milvus with popular AI frameworks, orchestration tools, LLMs, embedding providers, and data platforms.
+
+- [Integrations Overview](https://milvus.io/docs/integrations_overview.md): Overview of all supported integrations.
+- [LangChain - Basic Usage](https://milvus.io/docs/basic_usage_langchain.md): Basic Milvus vector store usage with LangChain.
+- [LangChain - RAG](https://milvus.io/docs/integrate_with_langchain.md): Build RAG pipelines with LangChain and Milvus.
+- [LangChain - Hybrid Search](https://milvus.io/docs/milvus_hybrid_search_retriever.md): Hybrid search retriever with LangChain.
+- [LlamaIndex - RAG](https://milvus.io/docs/integrate_with_llamaindex.md): Use Milvus as a vector store in LlamaIndex.
+- [DSPy](https://milvus.io/docs/integrate_with_dspy.md): Use Milvus as a retriever in DSPy.
+- [Haystack - RAG](https://milvus.io/docs/integrate_with_haystack.md): Use Milvus with Haystack for RAG pipelines.
+- [Dify](https://milvus.io/docs/dify_with_milvus.md): Use Milvus as the vector store backend in Dify.
+- [Langflow](https://milvus.io/docs/rag_with_langflow.md): Build RAG pipelines with Langflow and Milvus.
+- [Llama Stack](https://milvus.io/docs/llama_stack_with_milvus.md): Use Milvus with Meta's Llama Stack.
+- [n8n](https://milvus.io/docs/milvus_and_n8n.md): Use Milvus with n8n workflow automation.
+- [MemGPT](https://milvus.io/docs/integrate_with_memgpt.md): Use Milvus for long-term memory in MemGPT agents.
+- [Mem0](https://milvus.io/docs/quickstart_mem0_with_milvus.md): Use Milvus with Mem0 for agent memory.
+- [OpenAI Agents](https://milvus.io/docs/openai_agents_milvus.md): Use Milvus with OpenAI Agents SDK.
+- [MCP](https://milvus.io/docs/milvus_and_mcp.md): Use Milvus with Model Context Protocol.
+- [Ragas](https://milvus.io/docs/integrate_with_ragas.md): Evaluate RAG pipelines using Ragas.
+- [LangFuse](https://milvus.io/docs/integrate_with_langfuse.md): Observe and debug LLM applications with LangFuse.
+- [OpenAI Embeddings](https://milvus.io/docs/integrate_with_openai.md): Generate embeddings with OpenAI.
+- [Cohere Embeddings](https://milvus.io/docs/integrate_with_cohere.md): Generate embeddings with Cohere.
+- [HuggingFace](https://milvus.io/docs/integrate_with_hugging-face.md): Generate embeddings with HuggingFace models.
+- [SentenceTransformers](https://milvus.io/docs/integrate_with_sentencetransformers.md): Generate embeddings with Sentence Transformers.
+- [vLLM](https://milvus.io/docs/milvus_rag_with_vllm.md): Build RAG with vLLM and Milvus.
+- [Ollama](https://milvus.io/docs/build_RAG_with_milvus_and_ollama.md): Build RAG with Ollama and Milvus.
+- [DeepSeek](https://milvus.io/docs/build_RAG_with_milvus_and_deepseek.md): Build RAG with DeepSeek and Milvus.
+- [Gemini](https://milvus.io/docs/build_RAG_with_milvus_and_gemini.md): Build RAG with Gemini and Milvus.
+- [Airbyte](https://milvus.io/docs/integrate_with_airbyte.md): Ingest data from various sources via Airbyte.
+- [Kafka](https://milvus.io/docs/kafka-connect-milvus.md): Stream data from Kafka into Milvus.
+- [Firecrawl](https://milvus.io/docs/build_RAG_with_milvus_and_firecrawl.md): Crawl web pages and build RAG with Firecrawl.
+- [Unstructured](https://milvus.io/docs/rag_with_milvus_and_unstructured.md): Process unstructured documents for RAG.
+
+## Tutorials
+
+End-to-end tutorials and example applications demonstrating common use cases.
+
+- [Tutorials Overview](https://milvus.io/docs/tutorials-overview.md): Overview of all available tutorials.
+- [Build RAG with Milvus](https://milvus.io/docs/build-rag-with-milvus.md): Build a Retrieval-Augmented Generation pipeline.
+- [Advanced RAG](https://milvus.io/docs/how_to_enhance_your_rag.md): Techniques to enhance RAG pipeline accuracy.
+- [Full-Text Search with Milvus](https://milvus.io/docs/full_text_search_with_milvus.md): Implement BM25-based full-text search.
+- [Hybrid Search with Milvus](https://milvus.io/docs/hybrid_search_with_milvus.md): Combine dense and sparse vectors for hybrid search.
+- [Image Search with Milvus](https://milvus.io/docs/image_similarity_search.md): Build an image similarity search application.
+- [Multimodal RAG](https://milvus.io/docs/multimodal_rag_with_milvus.md): Build a multimodal RAG system using images and text.
+- [Graph RAG with Milvus](https://milvus.io/docs/graph_rag_with_milvus.md): Build a Graph RAG application.
+- [Contextual Retrieval](https://milvus.io/docs/contextual_retrieval_with_milvus.md): Implement contextual retrieval for improved accuracy.
+- [HDBSCAN Clustering](https://milvus.io/docs/hdbscan_clustering_with_milvus.md): Cluster vectors using HDBSCAN.
+- [Vector Visualization](https://milvus.io/docs/vector_visualization.md): Visualize high-dimensional vectors in 2D/3D.
+- [Movie Recommendation](https://milvus.io/docs/movie_recommendation_with_milvus.md): Build a movie recommendation system.
+- [Funnel Search with Matryoshka Embeddings](https://milvus.io/docs/funnel_search_with_matryoshka.md): Implement coarse-to-fine search with Matryoshka embeddings.
+- [Use AsyncMilvusClient with asyncio](https://milvus.io/docs/use-async-milvus-client-with-asyncio.md): Async operations with MilvusClient.
+- [Text-to-Image Search](https://milvus.io/docs/text_image_search.md): Cross-modal search between text and images.
+
+## FAQs
+
+- [Performance FAQs](https://milvus.io/docs/performance_faq.md): Answers to common performance-related questions.
+- [Product FAQs](https://milvus.io/docs/product_faq.md): Answers to common product-related questions.
+- [Operational FAQs](https://milvus.io/docs/operational_faq.md): Answers to common operational questions.
+- [Milvus Limits](https://milvus.io/docs/limitations.md): System limits and constraints reference.
+- [Troubleshooting](https://milvus.io/docs/troubleshooting.md): Common errors and their solutions.
+
+## API Reference
+
+- [PyMilvus (Python)](https://milvus.io/api-reference/pymilvus/v2.6.x/About.md): Complete Python SDK API reference.
+- [Java SDK](https://milvus.io/api-reference/java/v2.6.x/About.md): Complete Java SDK API reference.
+- [Go SDK](https://milvus.io/api-reference/go/v2.6.x/About.md): Complete Go SDK API reference.
+- [Node.js SDK](https://milvus.io/api-reference/node/v2.6.x/About.md): Complete Node.js SDK API reference.
+- [RESTful API](https://milvus.io/api-reference/restful/v2.6.x/About.md): RESTful API reference for language-agnostic access.
+
+## Optional
+
+The following pages provide background context, internal architecture details, and historical information. They can be skipped if context window space is limited.
+
+- [Milvus Adopters](https://milvus.io/docs/milvus_adopters.md): Major organizations that have adopted Milvus.
+- [Comparison](https://milvus.io/docs/comparison.md): Comparison of Milvus against other vector databases.
+- [Architecture Overview](https://milvus.io/docs/architecture_overview.md): High-level overview of Milvus's distributed system architecture.
+- [Main Components](https://milvus.io/docs/main_components.md): Key components (query nodes, data nodes, index nodes, etc.) and their roles.
+- [Streaming Service](https://milvus.io/docs/streaming_service.md): Streaming service architecture for real-time data ingestion.
+- [Data Processing](https://milvus.io/docs/data_processing.md): How data is processed from ingestion to indexing.
+- [Woodpecker](https://milvus.io/docs/woodpecker_architecture.md): Woodpecker WAL architecture for durable log storage.
+- [Knowhere](https://milvus.io/docs/knowhere.md): Internal module for vector indexing and search algorithms.
+- [Bitset](https://milvus.io/docs/bitset.md): Usage of bitsets for filtering search results.
+- [Timestamp](https://milvus.io/docs/timestamp.md): Timestamp concept for time-travel queries and data consistency.
+- [Time Synchronization](https://milvus.io/docs/time_sync.md): How Milvus synchronizes time across components in a cluster.
+- [Embeddings Overview](https://milvus.io/docs/embeddings.md): Overview of supported embedding models (overlaps with Embeddings & Reranking section).
+- [OpenAI Embeddings](https://milvus.io/docs/embed-with-openai.md): Generate embeddings with OpenAI.
+- [Sentence Transformers](https://milvus.io/docs/embed-with-sentence-transform.md): Generate embeddings with Sentence Transformers.
+- [BGE M3](https://milvus.io/docs/embed-with-bgm-m3.md): Generate dense and sparse embeddings with BGE-M3.
+- [SPLADE](https://milvus.io/docs/embed-with-splade.md): Generate sparse embeddings with SPLADE.
+- [Voyage](https://milvus.io/docs/embed-with-voyage.md): Generate embeddings with Voyage AI.
+- [Jina AI](https://milvus.io/docs/embed-with-jina.md): Generate embeddings with Jina AI.
+- [Cohere](https://milvus.io/docs/embed-with-cohere.md): Generate embeddings with Cohere.
+- [Mistral AI](https://milvus.io/docs/embed-with-mistral-ai.md): Generate embeddings with Mistral AI.
+- [Gemini](https://milvus.io/docs/embed-with-gemini.md): Generate embeddings with Google Gemini.
+- [Rerankers Overview](https://milvus.io/docs/rerankers-overview.md): Overview of supported reranking models.
+- [BGE Reranker](https://milvus.io/docs/rerankers-bge.md): Rerank with BGE reranker model.
+- [Cohere Reranker](https://milvus.io/docs/rerankers-cohere.md): Rerank with Cohere reranker model.
+- [Cross Encoder Reranker](https://milvus.io/docs/rerankers-cross-encoder.md): Rerank with Cross Encoder models.
+- [Voyage Reranker](https://milvus.io/docs/rerankers-voyage.md): Rerank with Voyage AI reranker.
+- [Jina AI Reranker](https://milvus.io/docs/rerankers-jina.md): Rerank with Jina AI reranker.
