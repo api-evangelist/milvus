@@ -21,6 +21,12 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/milvus.png
 tags:
 - Vector Database
+- Artificial Intelligence
+- Embeddings
+- Open-Source
+- Cloud-Native
+tags_raw:
+- Vector Database
 - AI
 - Embeddings
 - Open Source
@@ -34,6 +40,12 @@ apis:
   humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
   baseURL: http://{milvus_host}:19530/v2/vectordb
   tags:
+  - REST
+  - Collection
+  - Vectors
+  - Index
+  - Partitions
+  tags_raw:
   - REST
   - Collections
   - Vectors
@@ -81,6 +93,8 @@ apis:
   humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
   baseURL: http://{milvus_host}:19530/v2/vectordb
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
@@ -131,6 +145,8 @@ apis:
   humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
   baseURL: http://{milvus_host}:19530/v2/vectordb
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
