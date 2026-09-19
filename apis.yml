@@ -130,6 +130,8 @@ apis:
   humanURL: https://milvus.io/api-reference/restful/v2.5.x/About.md
   baseURL: http://{milvus_host}:19530/v2/vectordb
   tags:
+  - Index
+  tags_raw:
   - Indexes
   properties:
   - type: OpenAPI
