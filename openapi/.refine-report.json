@@ -1,12 +1,7 @@
 {
   "provider": "milvus",
   "sources": [
-    "milvus-collections-api-openapi.yml",
-    "milvus-entities-api-openapi.yml",
-    "milvus-indexes-api-openapi.yml",
-    "milvus-partitions-api-openapi.yml",
-    "milvus-roles-api-openapi.yml",
-    "milvus-users-api-openapi.yml"
+    "_original/milvus-openapi.yml"
   ],
   "outputs": [
     "milvus-collections-api-openapi.yml",
@@ -19,6 +14,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "milvus-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "milvus-openapi.yml: declared missing tag: Collections",
+    "milvus-openapi.yml: declared missing tag: Entities",
+    "milvus-openapi.yml: declared missing tag: Indexes",
+    "milvus-openapi.yml: declared missing tag: Partitions",
+    "milvus-openapi.yml: declared missing tag: Roles",
+    "milvus-openapi.yml: declared missing tag: Users",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "milvus-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "milvus-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "milvus-indexes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "milvus-partitions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "milvus-roles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "milvus-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
