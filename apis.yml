@@ -38,14 +38,17 @@ tags:
 - Vector Database
 - Artificial Intelligence
 - Embeddings
-- Open-Source
+- Open Source
 - Cloud-Native
+- Database
 tags_raw:
 - Vector Database
 - AI
 - Embeddings
 - Open Source
 - Cloud-Native
+- Open-Source
+- Database
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.23'
@@ -87,8 +90,6 @@ apis:
   - type: SDKs
     title: Node.js (milvus-sdk-node)
     url: https://github.com/milvus-io/milvus-sdk-node
-  - url: graphql/milvus-graphql.md
-    type: GraphQL
 - aid: milvus:milvus-grpc
   name: Milvus gRPC API
   humanURL: https://milvus.io/docs/grpc.md
